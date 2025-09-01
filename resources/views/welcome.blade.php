@@ -7,6 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>bodyyyyyyyyyyyyyyy</h1>
+
+    
+  <a href="{{ route('about') }}">Ke Halaman About</a>
+
+
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                 
