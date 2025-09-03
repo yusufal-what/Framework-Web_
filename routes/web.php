@@ -2,22 +2,37 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (){
+    return view ('Selamat Datang');
 });
 
-Route::get('/about', function () {
-    return 'about';
-})->name('about');
-
-Route:: get('/users/{id}', function($id) {
-    return "Nilai id usser adalah ".$id;
+Route::get('/', function(){
+    return 'Hello Yusuf';
 });
 
-Route::get('/contact', function () {
-    return "Ini adalah halaman kontak";
-})->name('contact');
+Route::get('/user/{id}', function($id){
+    return "User ID: " . $id;
+});
 
-Route:: get('/users/{id}/edit', function($id){
-    return "Edit user dengan ID = " .$id;
-})->name('contact');
+Route::get('/user/{nama?}', function($nama = 'Guest') {
+    return "Hallo, " . $nama;
+});
+
+Route::get('/profile', function () {
+    return 'This is the profile page.';
+})->name('profile');
+
+Route::get('/redirect-to-profile', function () {
+    return redirect()->route('profile');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return 'Admin Dashboard';
+    });
+    Route::get('/profile', function () {
+        return 'Admin Profile';
+    });
+});
+
+?>
