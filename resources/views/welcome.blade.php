@@ -5,7 +5,7 @@
 
 </head>
 <body>
-    <h1>Tugas 3 Framework Pemrograman Web</h1>
+    <h1>Tugas 2 Framework Pemrograman Web</h1>
     <p>Nama : Yusup Palkori </p>
     <p> Npm  : 2310631170058</p>
     <p>Kelas: 5D Informatika</p>
