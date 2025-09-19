@@ -44,8 +44,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::findOrFail($id);
-        return view('products.show', compact('product'));
+        return view('barang', ['isi_data'=> $id]);
     }
 
     /**

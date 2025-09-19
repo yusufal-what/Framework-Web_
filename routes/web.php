@@ -43,5 +43,7 @@ Route::get('/user/{id?}', function ($id = null) {
     }
 });
 
+route::get('/route_cont/{id}', action: [ProductController::class,'show'])
+
 // Route auth bawaan Breeze
 require __DIR__.'/auth.php';
