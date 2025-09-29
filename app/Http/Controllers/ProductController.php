@@ -3,83 +3,84 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // INDEX: Menampilkan daftar produk
     public function index()
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        // Sementara data dummy
+        $products = [
+            ['id' => 1, 'name' => 'Produk A', 'price' => 10000],
+            ['id' => 2, 'name' => 'Produk B', 'price' => 20000],
+        ];
+
+        return view('product.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // CREATE: Form tambah produk
     public function create()
     {
-        return view('products.create');
+        return view('product.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // STORE: Simpan produk baru
     public function store(Request $request)
     {
+        // Validasi sederhana
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'price' => 'required|integer',
+            'name'  => 'required|string|max:100',
+            'price' => 'required|numeric',
         ]);
 
-        Product::create($request->only(['name', 'price']));
-
-        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
+        // Simulasi penyimpanan (aslinya: Product::create($request->all()))
+        return redirect()->route('products.index')
+            ->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // SHOW: Tampilkan detail produk
+    public function show($id)
     {
-        return view('barang', ['isi_data'=> $id]);
+        return view('product.show', ['id' => $id]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    // EDIT: Form edit produk
+    public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        return view('products.edit', compact('product'));
+        return view('product.edit', ['id' => $id]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // UPDATE: Perbarui data produk
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'price' => 'required|integer',
+            'name'  => 'required|string|max:100',
+            'price' => 'required|numeric',
         ]);
 
-        $product = Product::findOrFail($id);
-        $product->update($request->only(['name', 'price']));
-
-        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui!');
+        // Simulasi update
+        return redirect()->route('products.index')
+            ->with('success', "Produk ID $id berhasil diperbarui!");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // DESTROY: Hapus produk
+    public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        // Simulasi delete
+        return redirect()->route('products.index')
+            ->with('success', "Produk ID $id berhasil dihapus!");
+    }
 
-        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
+    // STATISTIK: Method khusus hitung angka
+    public function statistik(int $inputAngka)
+    {
+        $angkaTambahan = 150;
+        $angkaHasil = $inputAngka + $angkaTambahan;
+
+        return view('product.statistik', [
+            'inputAngka'    => $inputAngka,
+            'angkaTambahan' => $angkaTambahan,
+            'angkaHasil'    => $angkaHasil,
+        ]);
     }
 }

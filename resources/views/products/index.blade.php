@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Daftar Produk</title>
+    <meta charset="UTF-8">
+    <title>Halaman Khusus Admin dan Owner</title>
 </head>
 <body>
-    <h1>Daftar Produk</h1>
-    <a href="{{ route('products.create') }}">Tambah Produk</a>
-    <ul>
-        @foreach ($products as $product)
-            <li>
-                {{ $product['name'] }} - Rp{{ number_format($product['price']) }}
-                <a href="{{ route('products.show', $loop->index) }}">Lihat</a>
-                <a href="{{ route('products.edit', $loop->index) }}">Edit</a>
-            </li>
-        @endforeach
-    </ul>
+
+    <h1>Data Dashboard Produk</h1>
+    <p>Selamat datang, **{{ Auth::user()->name }}** (Role: **{{ Auth::user()->role->name }}**)</p>
+    
+    <hr>
+    
+    <h2>Hasil Perhitungan Controller</h2>
+    <p>Angka yang diterima dari URL: **{{ $input }}**</p>
+    <p>Angka yang ditambahkan (misalnya +100): **100**</p>
+    <p>Angka Final (Angka yang dilempar ke View): **{{ $angka }}**</p>
+
 </body>
 </html>

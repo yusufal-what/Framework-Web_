@@ -1,49 +1,70 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\GoogleController;
+use Illuminate\Support\Facades\Route;
 
-// Route Resource untuk Produk (CRUD otomatis)
-Route::resource('products', ProductController::class);
-
-// Halaman Welcome
+// halaman welcome
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Dashboard dengan middleware
+// Dashboard middleware (akses setelah login & verifikasi)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Group route untuk Profile (auth wajib)
+// produuk
+Route::resource('products', ProductController::class);
+
+// Rute tambahan khusus untuk statistik (admin & owner)
+Route::middleware(['auth', 'role:admin,owner'])->group(function () {
+    Route::get('/dashboard/statistik/{angka}', [ProductController::class, 'statistik'])
+        ->name('product.statistik');
+});
+
+//artikel
+Route::middleware(['auth'])->group(function () {
+    Route::resource('articles', ArticleController::class);
+    // Catatan: - User bisa CRUD artikel miliknya sendiri.,- Admin bisa CRUD semua artikel.
+   
+   // google login
+Route::get('/auth/google', [GoogleController::class, 'google_redirect'])
+    ->name('google.login');
+Route::get('/auth/google/callback', [GoogleController::class, 'google_callback'])
+    ->name('google.callback');
+
+// profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-// Route user by ID
-Route::get('/user/id/{id}', function ($id) {
-    return "Lihat profil pengguna dengan ID: " . $id;
+// contoh route parameter una dengan ID: " . $id;
 });
 
-// Route user by nama
 Route::get('/user/name/{name}', function ($name) {
     return "Lihat profil pengguna dengan nama: " . $name;
 });
 
-// Route opsional (id bisa kosong) – kalau mau dipakai, hapus yang atas biar nggak tabrakan
+// Route opsional
 Route::get('/user/{id?}', function ($id = null) {
-    if ($id) {
-        return "Lihat profil pengguna dengan ID opsional: " . $id;
-    } else {
-        return "Tidak ada ID yang dimasukkan.";
-    }
+    return $id
+        ? "Lihat profil pengguna dengan ID opsional: " . $id
+        : "Tidak ada ID yang dimasukkan.";
 });
 
-route::get('/route_cont/{id}', action: [ProductController::class,'show'])
+// lainnya
+Route::get('/route_cont/{id}', [ProductController::class, 'show']);
+Route::get('/langganan', function () {
+    return view('langganan');
+});
+// route uts fwb
+Route::get('/uts', function () {
+    return view('uts.index'); 
+});
 
-// Route auth bawaan Breeze
-require __DIR__.'/auth.php';
+// Auth bawaan Breeze
+require __DIR__ . '/auth.php';
