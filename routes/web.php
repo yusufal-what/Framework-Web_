@@ -5,6 +5,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UtsController;
+
+
+
 
 // halaman welcome
 Route::get('/', function () {
@@ -65,6 +69,15 @@ Route::get('/langganan', function () {
 Route::get('/uts', function () {
     return view('uts.index'); 
 });
+
+Route::get('/uts', [UtsController::class, 'index'])->name('uts.index');
+
+// nampilin form tambah data
+Route::get('/uts/create', [App\Http\Controllers\UtsController::class, 'create']);
+
+// nyimpan data dari form
+Route::post('/uts/store', [App\Http\Controllers\UtsController::class, 'store']);
+
 
 // Auth bawaan Breeze
 require __DIR__ . '/auth.php';
