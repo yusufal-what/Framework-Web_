@@ -78,6 +78,13 @@ Route::get('/uts/create', [App\Http\Controllers\UtsController::class, 'create'])
 // nyimpan data dari form
 Route::post('/uts/store', [App\Http\Controllers\UtsController::class, 'store']);
 
+// Edit data
+Route::get('/uts/edit/{id}', [App\Http\Controllers\UtsController::class, 'edit']);
+
+// Update data
+Route::post('/uts/update/{id}', [App\Http\Controllers\UtsController::class, 'update']);
+
+
 
 // Auth bawaan Breeze
 require __DIR__ . '/auth.php';
