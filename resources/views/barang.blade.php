@@ -1,13 +1,9 @@
-@extends(view: 'utama')
+@extends('layouts.app')
 
-@section(section: 'judul_menu')
+@section('title', 'Halaman Barang')
+@section('bgcolor', 'lightblue')
 
-ini ditampilkan dari section judul menu, data : {{ $isi_data}}
-
-@endsection
-
-@section(section: 'isi_menu')
-
-ini isi dari section menu
-
+@section('content')
+    <h1>Halaman Barang</h1>
+    <p>Ini adalah halaman untuk mengelola barang.</p>
 @endsection

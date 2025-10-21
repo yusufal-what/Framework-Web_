@@ -42,7 +42,7 @@
                 <input type="text" class="form-control" id="producer" name="producer" required>
             </div>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Save Product</button>
             <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>

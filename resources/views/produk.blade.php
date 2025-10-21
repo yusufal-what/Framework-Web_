@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Halaman Produk</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-   
-</head>
-<body class="p-4">
+@extends('utama')
 
-    <h3>Halaman Produk</h3>
+@section('judul', 'Halaman Produk')
 
-    <x-alert type="{{ $alertType }}">
-        {{ $pesan }}
-    </x-alert>
+@section('konten')
+    <h1>Halaman Produk</h1>
+    <p>Nilai yang dimasukkan: {{ $angka }}</p>
 
-</body>
-</html>
+    <!-- Panggil komponen alert untuk no 5 -->
+    <x-alert type="{{ $alertType }}">{{ $pesan }}</x-alert>
+@endsection

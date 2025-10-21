@@ -2,85 +2,66 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // INDEX: Menampilkan daftar produk
     public function index()
     {
-        // Sementara data dummy
-        $products = [
-            ['id' => 1, 'name' => 'Produk A', 'price' => 10000],
-            ['id' => 2, 'name' => 'Produk B', 'price' => 20000],
-        ];
-
-        return view('product.index', compact('products'));
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
 
-    // CREATE: Form tambah produk
     public function create()
     {
-        return view('product.create');
+        return view('products.create');
     }
 
-    // STORE: Simpan produk baru
     public function store(Request $request)
     {
-        // Validasi sederhana
         $request->validate([
-            'name'  => 'required|string|max:100',
-            'price' => 'required|numeric',
+            'product_name' => 'required|string|max:255',
+            'unit' => 'required|string|max:50',
+            'type' => 'required|string|max:255',
+            'information' => 'required|string',
+            'qty' => 'required|integer|min:0',
+            'producer' => 'required|string|max:255',
         ]);
 
-        // Simulasi penyimpanan (aslinya: Product::create($request->all()))
+        Product::create($request->all());
+
         return redirect()->route('products.index')
-            ->with('success', 'Produk berhasil ditambahkan!');
+            ->with('success', 'Product created successfully.');
     }
 
-    // SHOW: Tampilkan detail produk
-    public function show($id)
+    public function edit(Product $product)
     {
-        return view('product.show', ['id' => $id]);
+        return view('products.edit', compact('product'));
     }
 
-    // EDIT: Form edit produk
-    public function edit($id)
-    {
-        return view('product.edit', ['id' => $id]);
-    }
-
-    // UPDATE: Perbarui data produk
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name'  => 'required|string|max:100',
-            'price' => 'required|numeric',
+            'product_name' => 'required|string|max:255',
+            'unit' => 'required|string|max:50',
+            'type' => 'required|string|max:255',
+            'information' => 'required|string',
+            'qty' => 'required|integer|min:0',
+            'producer' => 'required|string|max:255',
         ]);
 
-        // Simulasi update
+        $product->update($request->all());
+
         return redirect()->route('products.index')
-            ->with('success', "Produk ID $id berhasil diperbarui!");
+            ->with('success', 'Product updated successfully.');
     }
 
-    // DESTROY: Hapus produk
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        // Simulasi delete
+        $product->delete();
+
         return redirect()->route('products.index')
-            ->with('success', "Produk ID $id berhasil dihapus!");
-    }
-
-    // STATISTIK: Method khusus hitung angka
-    public function statistik(int $inputAngka)
-    {
-        $angkaTambahan = 150;
-        $angkaHasil = $inputAngka + $angkaTambahan;
-
-        return view('product.statistik', [
-            'inputAngka'    => $inputAngka,
-            'angkaTambahan' => $angkaTambahan,
-            'angkaHasil'    => $angkaHasil,
-        ]);
+            ->with('success', 'Product deleted successfully.');
     }
 }

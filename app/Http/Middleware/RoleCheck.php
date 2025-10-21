@@ -16,12 +16,13 @@ class RoleCheck
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        foreach($roles as $role) {
-            if (Auth::check() && Auth::user()->role == $role ){
-               return $next($request);
+        foreach ($roles as $role) {
+            if (Auth::check() && Auth::user()->role == $role) {
+                return $next($request);
             }
         }
-       Auth::logout();
-       return redirect()->route('login')->with('status', 'You are not authorized to access this page.');
+        
+        Auth::logout();
+        return redirect()->route('login')->with('status', 'You are not authorized to access this page.');
     }
 }
